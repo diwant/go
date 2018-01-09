@@ -11,3 +11,13 @@ func Home(w http.ResponseWriter, r *http.Request) {
 
 	w.Write([]byte("om gam gan ganapatye namo namah"))
 }
+
+// ShowSnippet ...
+func ShowSnippet(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("Shows a snippet"))
+}
+
+// NewSnippet ...
+func NewSnippet(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("Render the New Snippet form"))
+}
