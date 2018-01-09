@@ -13,6 +13,13 @@ import (
 const servAddr string = "224.0.0.1:9876"
 const maxReadSize int = 8192
 
+// Message ...
+type multicastMessage struct {
+	Time  string
+	Level int
+	Text  string
+}
+
 func main() {
 	log.Println("Welcome to Multicast Listen-o-Tron 2.0")
 	log.Println("------------------------------------")
@@ -22,6 +29,9 @@ func main() {
 func castHandler(a *net.UDPAddr, i int, b []byte) {
 	log.Println(i, "bytes read from", a)
 	log.Println(hex.Dump(b[:i]))
+	// var crate *multicastMessage
+	// json.Unmarshal(b, crate)
+	// log.Println(crate.Text)
 }
 
 func listenForMulticast(address string, handle func(*net.UDPAddr, int, []byte)) {

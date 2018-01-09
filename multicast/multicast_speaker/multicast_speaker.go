@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-const servAddr string = "224.0.0.1:9876"
+const servAddr string = " .0.0.1:9876"
 const maxReadSize int = 8192
 
 func main() {
