@@ -1,6 +1,10 @@
 package main
 
-import "net/http"
+import (
+	"fmt"
+	"net/http"
+	"strconv"
+)
 
 // Home ...
 func Home(w http.ResponseWriter, r *http.Request) {
@@ -14,7 +18,17 @@ func Home(w http.ResponseWriter, r *http.Request) {
 
 // ShowSnippet ...
 func ShowSnippet(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Shows a snippet"))
+
+	// Grab ID from GET and sanitize to int
+	id, err := strconv.Atoi(r.URL.Query().Get("id"))
+
+	// 404 If Wasn't Int, or Less Than 1
+	if err != nil || id < 1 {
+		http.NotFound(w, r)
+		return
+	}
+
+	fmt.Fprintf(w, "Display snippet id %d", id)
 }
 
 // NewSnippet ...

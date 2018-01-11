@@ -14,8 +14,15 @@ curl -i http://localhost:4000/doesnotexist
 
 echo ""
 echo "-------------------"
-printf "[ Testing Snippet Index... ]\n\n"
+printf "[ Testing Specific Snippet Index... ]\n\n"
+curl -i http://localhost:4000/snippet?id=123
+
+echo ""
+echo "-------------------"
+printf "[ Testing Specific Nonexistent Snippet Index... ]\n\n"
 curl -i http://localhost:4000/snippet
+curl -i http://localhost:4000/snippet?id=-1
+curl -i http://localhost:4000/snippet?id=xyz
 
 echo ""
 echo "-------------------"
