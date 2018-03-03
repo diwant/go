@@ -17,7 +17,6 @@ while !isDone:
 
     for a in aliens:
         if a.isAlive():
-            numLivingAliens++
             a.TravelToCity()
             if a.NumMoves < 10000:
                 isDone = false
