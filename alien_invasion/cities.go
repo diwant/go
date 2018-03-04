@@ -20,7 +20,7 @@ const (
 	west
 )
 
-// City sits adjacent to 0-4 cities in cardinal directions
+// City Sits Adjacent To 0 4 Cities In Cardinal Directions
 type City struct {
 	name          string              // No 2 Cities Share a Name
 	neighbors     map[Direction]*City // [Cardinal Direction] => *City
@@ -135,8 +135,8 @@ func NewCitiesFromFile(fileName string) []*City {
 	return cities
 }
 
-// RegisterNeighbor registers a neighboring city in a given direction,
-// returning false if a neighbor was already present in that direction
+// Register Neighbor Registers A Neighboring City In A Given Direction
+// Returning False If A Neighbor Was Already Present In That Direction
 func (c *City) RegisterNeighbor(d Direction, neighbor *City) bool {
 
 	// Search For Neighbor in Direction
@@ -155,8 +155,8 @@ func (c *City) RegisterNeighbor(d Direction, neighbor *City) bool {
 	return true
 }
 
-// DeregisterNeighbor deregisters a neighboring city,
-// returning false if that neighbor was never present
+// Deregister Neighbor Deregisters A Neighboring City
+// Returning False If That Neighbor Was Never Present
 func (c *City) DeregisterNeighbor(neighbor *City) bool {
 
 	// Iterate Over Neighbors Map
@@ -184,14 +184,14 @@ func (c *City) DeregisterNeighbor(neighbor *City) bool {
 	return false
 }
 
-// RegisterAlien adds alien to the list of aliens in the city
+// RegisterAlien Adds Alien To The List Of Aliens In The City
 func (c *City) RegisterAlien(a *Alien) {
 
 	// Append Alien
 	c.aliens = append(c.aliens, a)
 }
 
-// DeregisterAlien adds alien to the list of aliens in the city
+// DeregisterAlien Adds Alien To The List Of Aliens In The City
 func (c *City) DeregisterAlien(a *Alien) {
 
 	// Traverse Alien List and Remove Alien When Found
@@ -225,6 +225,7 @@ func (c *City) GetRandomNeighbor() *City {
 	return c.neighbors[nextDirection]
 }
 
+// String Renders A City As A String
 func (c *City) String() string {
 
 	// Buffer to Compile City Info Into
@@ -267,5 +268,6 @@ func (c *City) String() string {
 		buf.WriteString(" ")
 	}
 
+	// Return String
 	return buf.String()
 }

@@ -38,6 +38,7 @@ func (a *Alien) Travel() {
 
 }
 
+// String Renders an Alien as a String
 func (a *Alien) String() string {
 
 	// Buffer to Render String To
