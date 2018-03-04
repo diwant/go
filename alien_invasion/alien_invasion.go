@@ -6,12 +6,6 @@ import (
 	"strconv"
 )
 
-// City sits adjacent to 0-4 cities in cardinal directions
-type City struct {
-	name                     string
-	north, east, south, west *City
-}
-
 func main() {
 
 	fmt.Println("Alien Invasion!!!")
@@ -39,5 +33,9 @@ func main() {
 	// Confirm We Have Read the Arguments Correctly!
 	fmt.Printf("City File Name: %s | Num Aliens: %d\n", citiesFileName, numAliens)
 
-	// Parse File and Read Into Cities Graph
+	cities := NewCitiesFromFile(citiesFileName)
+
+	for _, city := range cities {
+		fmt.Println(city)
+	}
 }
