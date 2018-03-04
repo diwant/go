@@ -135,7 +135,7 @@ func NewCitiesFromFile(fileName string) []*City {
 	return cities
 }
 
-// Register Neighbor Registers A Neighboring City In A Given Direction
+// RegisterNeighbor Registers A Neighboring City In A Given Direction
 // Returning False If A Neighbor Was Already Present In That Direction
 func (c *City) RegisterNeighbor(d Direction, neighbor *City) bool {
 
@@ -155,7 +155,7 @@ func (c *City) RegisterNeighbor(d Direction, neighbor *City) bool {
 	return true
 }
 
-// Deregister Neighbor Deregisters A Neighboring City
+// DeregisterNeighbor Deregisters A Neighboring City
 // Returning False If That Neighbor Was Never Present
 func (c *City) DeregisterNeighbor(neighbor *City) bool {
 
