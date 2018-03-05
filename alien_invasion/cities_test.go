@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -102,4 +103,62 @@ func TestCreateTwoCitiesOneLinks(t *testing.T) {
 			assert.Equal(t, 0, len(c.aliens), "Unexpected number of resident aliens")
 		}
 	}
+}
+
+func TestBattleInLinkedCity(t *testing.T) {
+
+	// Create Isolated City From Scenario
+	cities := NewCitiesFromFile("scenarios/2_cities-both_link.txt")
+
+	// Create a Left and Right Alien For the Battle In The Same City
+	leftAlien := NewAlien(0, cities[0])
+	rightAlien := NewAlien(1, cities[0])
+
+	// Explode City
+	explodeMsg := cities[0].Explode()
+
+	// Set Up Expected Explode Message
+	expectedExplodeMsg := fmt.Sprintf("%s has been destroyed by alien %d and alien %d\n", cities[0].name, leftAlien.uuid, rightAlien.uuid)
+
+	// Assert the Explode Message is Correct
+	assert.Equal(t, expectedExplodeMsg, explodeMsg, "Unexpected explode message")
+
+	// Assert Neighboring City Doesn't Link In
+	assert.Equal(t, 0, len(cities[1].neighborIndex), "Unexpected number of neighbors in index list")
+	assert.Equal(t, 0, len(cities[1].neighbors), "Unexpected number of neighbors in map")
+
+	// Assert Aliens Are Dead
+	assert.Equal(t, true, leftAlien.dead, "Left Alien Should Be Dead")
+	assert.Equal(t, true, rightAlien.dead, "Right Alien Should Be Dead")
+}
+
+func TestNonBattleInLinkedCity(t *testing.T) {
+
+	// Create Isolated City From Scenario
+	cities := NewCitiesFromFile("scenarios/2_cities-both_link.txt")
+
+	// Create a Left Alien In the First City
+	leftAlien := NewAlien(0, cities[0])
+
+	// Create a Right Alien In the Second City
+	rightAlien := NewAlien(1, cities[1])
+
+	// Explode City
+	explodeMsg := cities[0].Explode()
+
+	// Set Up Expected Explode Message
+	expectedExplodeMsg := fmt.Sprintf("%s has been destroyed", cities[0].name)
+
+	// Assert the Explode Message is Correct
+	assert.Equal(t, expectedExplodeMsg, explodeMsg, "Unexpected explode message")
+
+	// Assert Neighboring City Doesn't Link In
+	assert.Equal(t, 0, len(cities[1].neighborIndex), "Unexpected number of neighbors in index list")
+	assert.Equal(t, 0, len(cities[1].neighbors), "Unexpected number of neighbors in map")
+
+	// Assert Left Alien Is Dead
+	assert.Equal(t, true, leftAlien.dead, "Left Alien Should Be Dead")
+
+	// Assert Right Alien Is NOT Dead (Because It Was In A Different City!)
+	assert.Equal(t, false, rightAlien.dead, "Right Alien Should Be Alive")
 }
