@@ -13,6 +13,16 @@ type Alien struct {
 	numMoves uint16
 }
 
+// NewAlien Creates an Alien and Registers it to the Given City
+func NewAlien(uuid uint64, c *City) *Alien {
+	a := &Alien{
+		uuid:     uuid,
+		currCity: c,
+	}
+	c.RegisterAlien(a)
+	return a
+}
+
 // Travel is When An Alien Leaves One City For Another
 func (a *Alien) Travel() {
 
@@ -44,8 +54,13 @@ func (a *Alien) String() string {
 	// Buffer to Render String To
 	var buf bytes.Buffer
 
-	// Print Alien Number and Num Moves and City (City to Make Sure It's Pointing To Same City It's Registered To)
-	buf.WriteString(fmt.Sprintf("%d (%d) (%s)", a.uuid, a.numMoves, a.currCity.name))
+	// Print Alien Number and Num Moves
+	buf.WriteString(fmt.Sprintf("%d (%d)", a.uuid, a.numMoves))
+
+	// Print City, If Present
+	if a.currCity != nil {
+		buf.WriteString(fmt.Sprintf(" [%s]", a.currCity.name))
+	}
 
 	// Print 'x' if Dead
 	if a.dead {
