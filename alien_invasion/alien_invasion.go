@@ -11,8 +11,6 @@ import (
 
 func main() {
 
-	log.Println("Alien Invasion!!!")
-
 	// Seed the Random Machine
 	rand.Seed(time.Now().UTC().UnixNano())
 
@@ -35,9 +33,6 @@ func main() {
 		log.Fatalln("Could not parse number of aliens from", args[2])
 		return
 	}
-
-	// Confirm We Have Read the Arguments Correctly!
-	log.Printf("City File Name: %s | Num Aliens: %d\n", citiesFileName, numAliens)
 
 	// Create the Cities From the File
 	cities := NewCitiesFromFile(citiesFileName)
@@ -65,11 +60,6 @@ func main() {
 		aliens = append(aliens, a)
 	}
 
-	// Debug Print
-	for _, city := range cities {
-		fmt.Println(city)
-	}
-
 	// Start the Game Loop
 	for {
 
@@ -85,7 +75,7 @@ func main() {
 			if len(c.aliens) > 1 {
 
 				// Aliens Fought and City is Destroyed
-				log.Println(c.Explode())
+				fmt.Println(c.Explode())
 			}
 		}
 
@@ -126,6 +116,4 @@ func main() {
 	for _, city := range cities {
 		fmt.Println(city)
 	}
-
-	log.Println("...and so ran the alien invasion of 2018.  THE END")
 }

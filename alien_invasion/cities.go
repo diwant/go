@@ -26,6 +26,7 @@ type City struct {
 	name          string              // No 2 Cities Share a Name
 	neighbors     map[Direction]*City // [Cardinal Direction] => *City
 	neighborIndex []Direction
+	roadsIn       []*City //Cities that Link In to this City
 	aliens        []*Alien
 	destroyed     bool
 }
@@ -153,6 +154,9 @@ func (c *City) RegisterNeighbor(d Direction, neighbor *City) bool {
 	// Add direction to available index
 	c.neighborIndex = append(c.neighborIndex, d)
 
+	// Register Self as a Road In to the Neighbor
+	neighbor.roadsIn = append(neighbor.roadsIn, c)
+
 	// Added New Neighbor, Return True
 	return true
 }
@@ -236,6 +240,42 @@ func (c *City) String() string {
 	// Print Name
 	buf.WriteString(c.name)
 
+	// Print Neighbors
+	buf.WriteString(" ")
+	for _, d := range c.neighborIndex {
+
+		// Print Direction
+		switch d {
+		case north:
+			buf.WriteString("north=")
+		case east:
+			buf.WriteString("east=")
+		case south:
+			buf.WriteString("south=")
+		case west:
+			buf.WriteString("west=")
+		}
+
+		// Print Name
+		buf.WriteString(c.neighbors[d].name)
+
+		// Print Separator
+		buf.WriteString(" ")
+	}
+
+	// Return String
+	return buf.String()
+}
+
+// DebugString Renders A City in Debug As A String
+func (c *City) DebugString() string {
+
+	// Buffer to Compile City Info Into
+	var buf bytes.Buffer
+
+	// Print Name
+	buf.WriteString(c.name)
+
 	// Print 'x' if Destroyed
 	if c.destroyed {
 		buf.WriteString(" x")
@@ -301,6 +341,11 @@ func (c *City) Explode() string {
 
 		// Deregister From Neighbor
 		c.neighbors[d].DeregisterNeighbor(c)
+	}
+
+	// Iterate Over Roads in and Deregister Self
+	for _, r := range c.roadsIn {
+		r.DeregisterNeighbor(c)
 	}
 
 	// Set Empty Neighbor List
