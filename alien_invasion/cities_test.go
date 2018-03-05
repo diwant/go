@@ -132,7 +132,7 @@ func TestBattleInLinkedCity(t *testing.T) {
 	assert.Equal(t, true, rightAlien.dead, "Right Alien Should Be Dead")
 }
 
-func TestNonBattleInLinkedCity(t *testing.T) {
+func TestNonBattleInLinkedCityOneAlienPresent(t *testing.T) {
 
 	// Create Isolated City From Scenario
 	cities := NewCitiesFromFile("scenarios/2_cities-both_link.txt")
