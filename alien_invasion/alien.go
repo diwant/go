@@ -24,7 +24,7 @@ func NewAlien(uuid uint64, c *City) *Alien {
 }
 
 // Travel is When An Alien Leaves One City For Another
-func (a *Alien) Travel() {
+func (a *Alien) Travel() uint16 {
 
 	// Increment Number of Moves
 	a.numMoves++
@@ -34,7 +34,8 @@ func (a *Alien) Travel() {
 
 	// Is Alien Trapped?
 	if nextCity == nil {
-		return
+		// Return Number of Moves
+		return a.numMoves
 	}
 
 	// Deregister from Current City
@@ -46,6 +47,8 @@ func (a *Alien) Travel() {
 	// Register In New City
 	a.currCity.RegisterAlien(a)
 
+	// Return Number of Moves
+	return a.numMoves
 }
 
 // String Renders an Alien as a String

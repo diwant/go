@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"bytes"
+	"fmt"
 	"log"
 	"math/rand"
 	"os"
@@ -26,6 +27,7 @@ type City struct {
 	neighbors     map[Direction]*City // [Cardinal Direction] => *City
 	neighborIndex []Direction
 	aliens        []*Alien
+	destroyed     bool
 }
 
 // NewCitiesFromFile Loads Cities From a Given File Name
@@ -234,9 +236,14 @@ func (c *City) String() string {
 	// Print Name
 	buf.WriteString(c.name)
 
+	// Print 'x' if Destroyed
+	if c.destroyed {
+		buf.WriteString(" x")
+	}
+
 	// Print Neighbors
 	buf.WriteString("\n  Neighbors: ")
-	for d, n := range c.neighbors {
+	for _, d := range c.neighborIndex {
 
 		// Print Direction
 		switch d {
@@ -251,7 +258,7 @@ func (c *City) String() string {
 		}
 
 		// Print Name
-		buf.WriteString(n.name)
+		buf.WriteString(c.neighbors[d].name)
 
 		// Print Separator
 		buf.WriteString(" ")
@@ -270,4 +277,48 @@ func (c *City) String() string {
 
 	// Return String
 	return buf.String()
+}
+
+// Explode Destroys the City, Citing the First Two Aliens as the Cause
+func (c *City) Explode() string {
+
+	// Set General Explode Message
+	explodeMsg := fmt.Sprintf("%s has been destroyed", c.name)
+
+	// Explode Message That Blames Aliens if Enough Aliens
+	if len(c.aliens) > 1 {
+
+		// Use First Two Aliens
+		leftAlien := c.aliens[0]
+		rightAlien := c.aliens[1]
+
+		// Set Explode Message
+		explodeMsg = fmt.Sprintf("%s has been destroyed by alien %d and alien %d\n", c.name, leftAlien.uuid, rightAlien.uuid)
+	}
+
+	// Iterate Over All Neighbors
+	for _, d := range c.neighborIndex {
+
+		// Deregister From Neighbor
+		c.neighbors[d].DeregisterNeighbor(c)
+	}
+
+	// Set Empty Neighbor List
+	c.neighborIndex = []Direction{}
+
+	// Set Empty Neighbor Map
+	c.neighbors = make(map[Direction]*City)
+
+	// Iterate Over all Aliens
+	for _, a := range c.aliens {
+
+		// Kill Alien
+		a.dead = true
+	}
+
+	// Set This City As Destroyed
+	c.destroyed = true
+
+	// Return Explode Message
+	return explodeMsg
 }
