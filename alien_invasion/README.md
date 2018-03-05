@@ -17,7 +17,7 @@ Once again, that input is
 
 + Multiple aliens can be in any given city at the end of an alien migration.  The first two on the city's registry will fight, the city explodes, and all aliens in the city die, not just the ones fighting.
 
-+ Moving one city is one turn for an alien.  Moving Through a city to another beyond requires more than 1 turn and the alien might encounter in the middle another alien who it must then battle
++ Moving one city is one turn for an alien.  Moving through a city to another beyond requires more than 1 turn and the alien might encounter in the middle another alien who it must then battle
 
 ## Logic Draft
 Here is my First Draft of Logic
