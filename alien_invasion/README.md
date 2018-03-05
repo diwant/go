@@ -4,6 +4,11 @@ Input is
 * city_map a file that is a map of cities, and
 * N the number of aliens to prepopulate in the cities
 
+## Assumptions Made
++ Links between cities are as provided.  So just because Foo has a road to Baz, Baz does not have a road to Foo unless explicitly declared in the input file.  
+
++ Multiple aliens can be in any given city at the end of an alien migration.  The first two on the city's registry will fight, the city explodes, and all aliens in the city die, not just the ones fighting.
+
 ## Main Flows of Code
 Here is my First Draft of Logic
 ```
