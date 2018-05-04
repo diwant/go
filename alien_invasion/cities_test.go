@@ -132,6 +132,33 @@ func TestBattleInLinkedCity(t *testing.T) {
 	assert.Equal(t, true, rightAlien.dead, "Right Alien Should Be Dead")
 }
 
+func TestBattleInSingleLinkedCity(t *testing.T) {
+
+	// Create Isolated City From Scenario
+	cities := NewCitiesFromFile("scenarios/2_cities-one_links.txt")
+
+	// Create a Left and Right Alien For the Battle In The Second City (Linked To)
+	leftAlien := NewAlien(0, cities[1])
+	rightAlien := NewAlien(1, cities[1])
+
+	// Explode City
+	explodeMsg := cities[1].Explode()
+
+	// Set Up Expected Explode Message
+	expectedExplodeMsg := fmt.Sprintf("%s has been destroyed by alien %d and alien %d\n", cities[1].name, leftAlien.uuid, rightAlien.uuid)
+
+	// Assert the Explode Message is Correct
+	assert.Equal(t, expectedExplodeMsg, explodeMsg, "Unexpected explode message")
+
+	// Assert Neighboring City Doesn't Link In
+	assert.Equal(t, 0, len(cities[0].neighborIndex), "Unexpected number of neighbors in index list")
+	assert.Equal(t, 0, len(cities[0].neighbors), "Unexpected number of neighbors in map")
+
+	// Assert Aliens Are Dead
+	assert.Equal(t, true, leftAlien.dead, "Left Alien Should Be Dead")
+	assert.Equal(t, true, rightAlien.dead, "Right Alien Should Be Dead")
+}
+
 func TestNonBattleInLinkedCityOneAlienPresent(t *testing.T) {
 
 	// Create Isolated City From Scenario
