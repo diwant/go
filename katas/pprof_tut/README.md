@@ -27,3 +27,9 @@ Also, the console will print out heap statistics.  Here's what each bit means:
 | mem.TotalAlloc | What we allocated throughout the lifetime |
 | mem.HeapAlloc | What’s being used on the heap right now |
 | mem.HeapSys | This includes what is being used by the heap and what has been reclaimed but not given back out |
+
+# References
+These articles are where I found the code I used and explain these concepts well
+
+* **Memory Stats**: https://deferpanic.com/blog/understanding-golang-memory-usage/
+* **CPU and Mem Profiling**: https://blog.golang.org/profiling-go-programs
