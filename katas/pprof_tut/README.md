@@ -8,7 +8,7 @@
 
 # How to Use
 
-Running `go run myprogram.go` will run all three above functions and create a `cpu.prof` and `mem.prof` file in the pprof_tut folder (or where you ran the go binary from).
+Running `go run myprogram.go` will run all three above functions and create a `cpu.prof` and `mem.prof` file in the `pprof_tut` folder (or where you ran the go binary from).
 
 ## Go tool pprof
 Now, run `go tool pprof cpu.prof` to check CPU profiling
@@ -20,9 +20,10 @@ Now, you are in the pprof console. Some cool things to try in the pprof console:
 
 ## Heap Memory Stats
 Also, the console will print out heap statistics.  Here's what each bit means:
-```
-mem.Alloc - these are the bytes that were allocated and still in use
-mem.TotalAlloc - what we allocated throughout the lifetime
-mem.HeapAlloc - what’s being used on the heap right now
-mem.HeapSys - this includes what is being used by the heap and what has been reclaimed but not given back out
-```
+
+| Name | Description |
+| ---- | ----------- |
+| mem.Alloc | These are the bytes that were allocated and still in use |
+| mem.TotalAlloc | What we allocated throughout the lifetime |
+| mem.HeapAlloc | What’s being used on the heap right now |
+| mem.HeapSys | This includes what is being used by the heap and what has been reclaimed but not given back out |
